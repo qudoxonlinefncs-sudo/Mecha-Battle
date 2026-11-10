@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mecha-Battle V16</title>
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <div id="hurt"></div>
+  <div id="crosshair"></div>
+  <div id="hud">
+    <div class="box">
+      <div>❤ <span id="hp">100</span> / <span id="maxhp">100</span> <span id="armorlabel" style="color:#8cf;font-size:12px;font-weight:bold"></span></div>
+      <div class="bar"><div id="hpbar" style="width:100%"></div></div>
+      <div id="bombbar"><div id="bombfill" style="width:100%"></div></div>
+      <div style="margin-top:6px">💰 <span id="money">800</span> · ☠ <span id="kills">0</span></div>
+    </div>
+    <div class="box">
+      <div>Раунд <span id="round">1</span> · <span id="timer">60</span>с</div>
+      <div>Ты <span id="pwins">0</span> — <span id="ewins">0</span> Враги</div>
+      <div id="bombstatus" style="color:#f88;font-size:12px"></div>
+    </div>
+    <div class="box" style="min-width:150px">
+      <div style="font-size:11px;opacity:.7;margin-bottom:4px">КОМПЛАНТ</div>
+      <div id="effects"></div>
+    </div>
+  </div>
+  <div id="banner"></div>
+  <div id="killfeed"></div>
+  <div id="prompt"></div>
+  <div id="mainmenu">
+    <div id="menu-bg"></div>
+    <div class="menu-shade"></div>
+    <div class="menu-shell">
+      <div class="menu-side">
+        <div class="logo">MECHA-BATTLE</div>
+        <div class="subtitle">Тактический шутер · осколки · арена</div>
+        <div class="tabs">
+          <div class="tab active" data-tab="play"><span class="ico">▶</span> Играть</div>
+          <div class="tab" data-tab="shopinfo"><span class="ico">◆</span> Магазин</div>
+          <div class="tab" data-tab="news"><span class="ico">◈</span> Новости</div>
+          <div class="tab" data-tab="esports"><span class="ico">★</span> Киберспорт</div>
+          <div class="tab" data-tab="settings"><span class="ico">⚙</span> Настройки</div>
+        </div>
+        <div class="version">v0.16.1 · TypeScript + Vite</div>
+      </div>
+      <div class="menu-main">
+        <div class="panel active" id="panel-play">
+          <div class="panel-title">Начать матч</div>
+          <div class="panel-desc">Выберите сложность ботов. После выбора откроется закупка оружия и осколков.</div>
+          <div class="diff-grid">
+            <button class="diff-btn" data-diff="easy"><span class="tag">EASY</span><br>Лёгкие боты<div class="desc">Медленная реакция<br>Низкая точность<br>Для знакомства с игрой</div></button>
+            <button class="diff-btn" data-diff="medium"><span class="tag">MEDIUM</span><br>Средние боты<div class="desc">Нормальная реакция<br>Средняя точность<br>Сбалансированный бой</div></button>
+            <button class="diff-btn" data-diff="hard"><span class="tag">HARD</span><br>Сложные боты<div class="desc">Быстрая реакция<br>Высокая точность<br>Для опытных игроков</div></button>
+          </div>
+        </div>
+        <div class="panel" id="panel-shopinfo">
+          <div class="panel-title">Магазин</div>
+          <div class="panel-desc">Оружие и осколки покупаются перед каждым раундом матча.</div>
+          <div class="card">
+            <p class="placeholder">В закупке доступны пистолет, ПП, винтовка и до 3 осколков.</p>
+            <p style="opacity:.45;font-size:13px;margin-top:8px">Чтобы открыть магазин, выберите сложность во вкладке «Играть».</p>
+          </div>
+        </div>
+        <div class="panel" id="panel-news">
+          <div class="panel-title">Новости</div>
+          <div class="panel-desc">Обновления и события Mecha-Battle.</div>
+          <div class="card"><p class="placeholder">Разрабатывается</p></div>
+        </div>
+        <div class="panel" id="panel-esports">
+          <div class="panel-title">Киберспорт</div>
+          <div class="panel-desc">Турниры и рейтинговые матчи.</div>
+          <div class="card"><p class="placeholder">Разрабатывается</p></div>
+        </div>
+        <div class="panel" id="panel-settings">
+          <div class="panel-title">Настройки</div>
+          <div class="panel-desc">Управление и графика.</div>
+          <div class="card" style="max-width:480px">
+            <div class="setting-row">
+              <label>Чувствительность мыши</label>
+              <div style="display:flex;align-items:center;gap:10px">
+                <input type="range" id="sens-slider" min="1" max="20" value="5">
+                <span id="sens-val" style="min-width:20px;font-size:13px;color:#8cf">5</span>
+              </div>
+            </div>
+            <div class="setting-row"><label>FOV игрока</label><span class="soon">Скоро</span></div>
+            <div class="setting-row"><label>FOV оружия</label><span class="soon">Скоро</span></div>
+            <div class="setting-row"><label>Графика Low / Medium / High</label><span class="soon">Скоро</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="shop" class="hidden">
+    <h2>Раунд <span id="shop-round">1</span> · Закупка</h2>
+    <div class="money">💰 <span id="shop-money">800</span></div>
+    <div style="font-size:13px;opacity:.7;margin-bottom:6px">ОРУЖИЕ</div>
+    <div class="weapons" id="weapons"></div>
+    <div style="font-size:13px;opacity:.7;margin:10px 0 6px">ОСКОЛКИ (до 3)</div>
+    <div class="comp" id="comp"></div>
+    <div id="dps-panel"></div>
+    <div class="grid" id="items"></div>
+    <button id="ready">В БОЙ</button>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
